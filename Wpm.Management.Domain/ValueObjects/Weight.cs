@@ -11,7 +11,11 @@ public record Weight
             throw new ArgumentException("Weight value is not valid");
         }
 
-        Value = value;
-        
+        Value = value;        
+    }
+
+    public static implicit operator Weight(decimal value) 
+    {
+        return new Weight(value);
     }
 }

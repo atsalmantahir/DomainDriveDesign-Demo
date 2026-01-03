@@ -13,8 +13,8 @@ public class PetTest
         var breedService = new FakeBreedService();
         var breedId = new BreedId(breedService.breeds[0].Id, breedService);
 
-        var pet1 = new Pet(id, "Andre", 13, "Brown", new Weight(20.5m), SexOfPet.Male, breedId);
-        var pet2 = new Pet(id, "Tina", 11, "White", new Weight(20.5m), SexOfPet.Female, breedId);
+        var pet1 = new Pet(id, "Andre", 13, "Brown", SexOfPet.Male, breedId);
+        var pet2 = new Pet(id, "Tina", 11, "White", SexOfPet.Female, breedId);
 
         Assert.True(pet1.Equals(pet2));
     }
@@ -27,8 +27,8 @@ public class PetTest
         var breedService = new FakeBreedService();
         var breedId = new BreedId(breedService.breeds[0].Id, breedService);
 
-        var pet1 = new Pet(id, "Andre", 13, "Brown", new Weight(20.5m), SexOfPet.Male, breedId);
-        var pet2 = new Pet(id, "Tina", 11, "White", new Weight(20.5m), SexOfPet.Female, breedId);
+        var pet1 = new Pet(id, "Andre", 13, "Brown", SexOfPet.Male, breedId);
+        var pet2 = new Pet(id, "Tina", 11, "White", SexOfPet.Female, breedId);
 
         Assert.True(pet1 == pet2);
     }
@@ -42,8 +42,8 @@ public class PetTest
         var breedService = new FakeBreedService();
         var breedId = new BreedId(breedService.breeds[0].Id, breedService);
 
-        var pet1 = new Pet(id1, "Andre", 13, "Brown", new Weight(20.5m), SexOfPet.Male, breedId);
-        var pet2 = new Pet(id2, "Tina", 11, "White", new Weight(20.5m), SexOfPet.Female, breedId);
+        var pet1 = new Pet(id1, "Andre", 13, "Brown", SexOfPet.Male, breedId);
+        var pet2 = new Pet(id2, "Tina", 11, "White", SexOfPet.Female, breedId);
 
         Assert.True(pet1 != pet2);
     }
@@ -105,4 +105,29 @@ public class PetTest
             var breedId = new BreedId(id, breedService);
         });
     }
+
+    [Fact]
+    public void WeightClass_should_be_ideal() 
+    {
+        var breedService = new FakeBreedService();
+        var breedId = new BreedId(breedService.breeds[0].Id, breedService);
+
+        var pet = new Pet(Guid.NewGuid(), "Andre", 13, "Brown", SexOfPet.Male, breedId);
+        pet.SetWeight(10, breedService);
+
+        Assert.True(pet.WeightClass == WeightClass.Ideal);
+    }
+
+    [Fact]
+    public void WeightClass_should_be_overweight()
+    {
+        var breedService = new FakeBreedService();
+        var breedId = new BreedId(breedService.breeds[0].Id, breedService);
+
+        var pet = new Pet(Guid.NewGuid(), "Andre", 13, "Brown", SexOfPet.Male, breedId);
+        pet.SetWeight(21, breedService);
+
+        Assert.True(pet.WeightClass == WeightClass.Overweight);
+    }
+
 }
