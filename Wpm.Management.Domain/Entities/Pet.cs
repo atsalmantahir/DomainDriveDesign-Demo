@@ -8,7 +8,7 @@ public class Pet : Entity
     public string Name { get; init; }
     public int Age { get; init; }
     public string Color { get; init; }
-    public Weight Weight { get; set; }
+    public Weight? Weight { get; set; }
     public WeightClass WeightClass { get; set; }
     public SexOfPet SexOfPet { get; init; }
     public BreedId BreedId { get; init; }
@@ -18,14 +18,14 @@ public class Pet : Entity
                int age,
                string color,
                SexOfPet sexOfPet,
-               BreedId breadId)
+               BreedId breedId)
     {
         Id = id;
         Name = name;
         Age = age;
         Color = color;
         SexOfPet = sexOfPet;
-        BreedId = breadId;
+        BreedId = breedId;
     }
 
     public void SetWeight(Weight weight, IBreedService breedService) 

@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Wpm.Management.Api.Infrasrtucture;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,8 +10,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+builder.Services.AddDbContext<ManagementDbContext>(options => 
+{
+    options.UseSqlite("Data source=WpManagement.db");
+});
 
+var app = builder.Build();
+app.EnsureDbIsCreated();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
